@@ -84,7 +84,12 @@ class patient extends basemodel{
             "UPDATE patients SET name=?,age=?,doctor_id=? WHERE id = ?"
         )->execute([$name,$age,$doctorID,$id]);
     }
-
+    
+    public function delete($id){
+        $this->pdo->prepare(
+            "DELETE FROM patients WHERE id =?"
+        )->execute([$id]);
+    }
 }
 
 $database = new database() ;
@@ -135,7 +140,7 @@ while(true){
          if($chosepatient=="2"){
             $patient->read();
          }
-         if($chosepatient){
+         if($chosepatient=="3"){
               echo "id : " ; $id = trim(fgets(STDIN));
               echo "name : " ; $name = trim(fgets(STDIN));
               echo "age : " ; $age = trim(fgets(STDIN));
@@ -143,7 +148,10 @@ while(true){
 
 
               $patient->update($id,$name,$age,$doctorID);
-
+         }
+         if($chosepatient=="4"){
+            echo "entrer ID pour suprimer :" ; $id = trim(fgets(STDIN));
+            $patient->delete($id);
          }
     }elseif($main=="3"){
          echo "***********departements**********\n";
