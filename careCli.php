@@ -50,6 +50,12 @@ class doctor extends basemodel{
             "UPDATE doctors SET name=? , specialty=? , department_id=? where id = ?"
           )->execute([$name,$spec,$dep,$id]);
     }
+
+    public function delete($id){
+        $this->pdo->prepare(
+            "DELETE FROM doctors WHERE id=? "
+        )->execute([$id]);
+    }
 }
 
 $database = new database() ;
@@ -82,6 +88,10 @@ while(true){
             echo "specyalite : " ; $specyalite = trim(fgets(STDIN)); 
             echo "departement : " ; $departement = trim(fgets(STDIN)); 
             $doctor->update($id , $name , $specyalite ,$departement);
+         }
+         if($chosedoctor=="4"){
+            echo "entrer ID pour supremer :"; $id = trim(fgets(STDIN));
+            $doctor->delete($id);
          }
     }elseif($main=="2"){
          echo "***********patients**********\n";
