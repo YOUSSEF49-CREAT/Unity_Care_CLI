@@ -66,6 +66,19 @@ class patient extends basemodel{
         )->execute([$name,$age,$doctorID]);
     }
 
+
+    public function read(){
+        $stmt = $this->pdo->query(
+            " SELECT p.id , p.name ,p. age  , d.name AS doctor
+              FROM patients p
+              JOIN doctors d ON p.doctor_id = d.id 
+              "
+        );
+        foreach($stmt as $p){
+            echo "{$p['id']} | {$p['name']} | {$p['age']} | {$p['doctor']} \n";
+        }
+    }
+
 }
 
 $database = new database() ;
@@ -113,7 +126,9 @@ while(true){
             echo "doctor ID : " ; $doctorID = trim(fgets(STDIN));
              $patient->create($name,$age,$doctorID);
          }
-         
+         if($chosepatient=="2"){
+            $patient->read();
+         }
     }elseif($main=="3"){
          echo "***********departements**********\n";
          echo "1-add departement\n2-show departement\n3-update departement\n4-delet departement\n0-exit\nchose:";
