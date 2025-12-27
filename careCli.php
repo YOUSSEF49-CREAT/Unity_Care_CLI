@@ -58,9 +58,19 @@ class doctor extends basemodel{
     }
 }
 
+class patient extends basemodel{
+    
+    public function create($name,$age,$doctorID){
+        $this->pdo->prepare(
+            "INSERT INTO patients(name,age,doctor_id) VALUES (?,?,?)"
+        )->execute([$name,$age,$doctorID]);
+    }
+
+}
+
 $database = new database() ;
 $doctor = new doctor($database->pdo);
-
+$patient = new patient($database->pdo);
 
 
 while(true){
@@ -97,6 +107,13 @@ while(true){
          echo "***********patients**********\n";
          echo "1-add patient\n2-show patient\n3-update patient\n4-delet patient\n0-exit\nchose:";
          $chosepatient = trim(fgets(STDIN));
+         if($chosepatient=="1"){
+            echo "name : " ; $name = trim(fgets(STDIN));
+            echo "age  : " ; $age = trim(fgets(STDIN));
+            echo "doctor ID : " ; $doctorID = trim(fgets(STDIN));
+             $patient->create($name,$age,$doctorID);
+         }
+         
     }elseif($main=="3"){
          echo "***********departements**********\n";
          echo "1-add departement\n2-show departement\n3-update departement\n4-delet departement\n0-exit\nchose:";
