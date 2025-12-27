@@ -34,11 +34,21 @@ class doctor extends basemodel{
             "INSERT INTO doctors (name,specialty,department_id) VALUES (?,?,?)"
          )->execute([$na,$spe,$depID]);
     }
+
+    public function read(){
+           $stmt =  $this->pdo->query( "SELECT d.id , d.name , d.specialty , depr.name AS depr
+                       FROM doctors d
+                       JOIN departments depr ON d.department_id = depr.id "
+           );
+           foreach($stmt as $d){
+            echo "{$d['id']} | {$d['name']} |{$d['specialty']} |{$d['depr']} |\n" ;
+           }
+    }
 }
 
 $database = new database() ;
 $doctor = new doctor($database->pdo);
-// $doctor = new doctor();
+
 
 
 while(true){
@@ -56,6 +66,8 @@ while(true){
 
             $doctor->create($name,$spec,$depID);
             
+         }elseif($chosedoctor="2"){
+            $doctor->read();
          }
     }elseif($main=="2"){
          echo "***********patients**********\n";
