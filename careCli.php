@@ -43,6 +43,12 @@ class doctor extends basemodel{
            foreach($stmt as $d){
             echo "{$d['id']} | {$d['name']} |{$d['specialty']} |{$d['depr']} |\n" ;
            }
+         }
+
+    public function update($id , $name , $spec , $dep){
+          $this->pdo->prepare(
+            "UPDATE doctors SET name=? , specialty=? , department_id=? where id = ?"
+          )->execute([$name,$spec,$dep,$id]);
     }
 }
 
@@ -66,8 +72,16 @@ while(true){
 
             $doctor->create($name,$spec,$depID);
             
-         }elseif($chosedoctor="2"){
+         }
+         if($chosedoctor=="2"){
             $doctor->read();
+         }
+         if($chosedoctor=="3"){
+            echo "id : " ; $id = trim(fgets(STDIN)); 
+            echo "name : " ; $name = trim(fgets(STDIN)); 
+            echo "specyalite : " ; $specyalite = trim(fgets(STDIN)); 
+            echo "departement : " ; $departement = trim(fgets(STDIN)); 
+            $doctor->update($id , $name , $specyalite ,$departement);
          }
     }elseif($main=="2"){
          echo "***********patients**********\n";
