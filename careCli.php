@@ -79,6 +79,12 @@ class patient extends basemodel{
         }
     }
 
+    public function update($id,$name,$age,$doctorID){
+        $this->pdo->prepare(
+            "UPDATE patients SET name=?,age=?,doctor_id=? WHERE id = ?"
+        )->execute([$name,$age,$doctorID,$id]);
+    }
+
 }
 
 $database = new database() ;
@@ -128,6 +134,16 @@ while(true){
          }
          if($chosepatient=="2"){
             $patient->read();
+         }
+         if($chosepatient){
+              echo "id : " ; $id = trim(fgets(STDIN));
+              echo "name : " ; $name = trim(fgets(STDIN));
+              echo "age : " ; $age = trim(fgets(STDIN));
+              echo "doctor ID : " ; $doctorID = trim(fgets(STDIN));
+
+
+              $patient->update($id,$name,$age,$doctorID);
+
          }
     }elseif($main=="3"){
          echo "***********departements**********\n";
