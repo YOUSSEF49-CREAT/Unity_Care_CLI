@@ -33,6 +33,7 @@ class doctor extends basemodel{
          $this->pdo->prepare(
             "INSERT INTO doctors (name,specialty,department_id) VALUES (?,?,?)"
          )->execute([$na,$spe,$depID]);
+         echo "Opération validée avec succès.\n";
     }
 
     public function read(){
@@ -43,18 +44,21 @@ class doctor extends basemodel{
            foreach($stmt as $d){
             echo "{$d['id']} | {$d['name']} |{$d['specialty']} |{$d['depr']} |\n" ;
            }
+           echo "Opération validée avec succès.\n";
          }
 
     public function update($id , $name , $spec , $dep){
           $this->pdo->prepare(
             "UPDATE doctors SET name=? , specialty=? , department_id=? where id = ?"
           )->execute([$name,$spec,$dep,$id]);
+          echo "Opération validée avec succès.\n";
     }
 
     public function delete($id){
         $this->pdo->prepare(
             "DELETE FROM doctors WHERE id=? "
         )->execute([$id]);
+        echo "Opération validée avec succès.\n";
     }
 }
 
@@ -64,6 +68,7 @@ class patient extends basemodel{
         $this->pdo->prepare(
             "INSERT INTO patients(name,age,doctor_id) VALUES (?,?,?)"
         )->execute([$name,$age,$doctorID]);
+        echo "Opération validée avec succès.\n";
     }
 
 
@@ -77,18 +82,21 @@ class patient extends basemodel{
         foreach($stmt as $p){
             echo "{$p['id']} | {$p['name']} | {$p['age']} | {$p['doctor']} \n";
         }
+        echo "Opération validée avec succès.\n";
     }
 
     public function update($id,$name,$age,$doctorID){
         $this->pdo->prepare(
             "UPDATE patients SET name=?,age=?,doctor_id=? WHERE id = ?"
         )->execute([$name,$age,$doctorID,$id]);
+        echo "Opération validée avec succès.\n";
     }
     
     public function delete($id){
         $this->pdo->prepare(
             "DELETE FROM patients WHERE id =?"
         )->execute([$id]);
+        echo "Opération validée avec succès.\n";
     }
 }
 
@@ -99,6 +107,7 @@ class departement extends basemodel{
            $this->pdo->prepare(
             "INSERT INTO departments(name) VALUES (?)"
            )->execute([$name]);
+           echo "Opération validée avec succès.\n";
     }
 
     public function read(){
@@ -108,12 +117,14 @@ class departement extends basemodel{
         foreach($stmt as $d){
             echo "\n{$d['id']} | {$d['name']} \n" ;
         }
+        echo "Opération validée avec succès.\n";
     }
 
     public function update($id , $name){
         $this->pdo->prepare(
             "UPDATE departments SET name=? WHERE id =?"
         )->execute([$name , $id]);
+        echo "Opération validée avec succès.\n";
     }
 
 
@@ -121,6 +132,7 @@ class departement extends basemodel{
         $this->pdo->prepare(
             "DELETE FROM departments WHERE id = ?"
         )->execute([$id]);
+        echo "Opération validée avec succès.\n";
     }
 
 }
