@@ -109,6 +109,12 @@ class departement extends basemodel{
             echo "\n{$d['id']} | {$d['name']} \n" ;
         }
     }
+
+    public function update($id , $name){
+        $this->pdo->prepare(
+            "UPDATE departments SET name=? WHERE id =?"
+        )->execute([$name , $id]);
+    }
 }
 
 $database = new database() ;
@@ -183,6 +189,11 @@ while(true){
          if($chosedepartement=="2"){
             
             $departement->read();
+         }
+         if($chosedepartement=="3"){
+            echo "deparetement ID : " ; $depID = trim(fgets(STDIN));
+            echo "new name : " ; $name = trim(fgets(STDIN));
+            $departement->update($depID,$name);
          }
     }
 }
