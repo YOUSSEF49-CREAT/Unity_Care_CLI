@@ -101,7 +101,14 @@ class departement extends basemodel{
            )->execute([$name]);
     }
 
-   
+    public function read(){
+        $stmt = $this->pdo->query(
+            "SELECT * FROM departments "
+        );
+        foreach($stmt as $d){
+            echo "\n{$d['id']} | {$d['name']} \n" ;
+        }
+    }
 }
 
 $database = new database() ;
@@ -173,6 +180,9 @@ while(true){
             echo "name : " ; $name =  trim(fgets(STDIN));
             $departement->create($name);
          }
-         
+         if($chosedepartement=="2"){
+            
+            $departement->read();
+         }
     }
 }
