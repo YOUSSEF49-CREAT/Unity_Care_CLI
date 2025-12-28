@@ -115,6 +115,14 @@ class departement extends basemodel{
             "UPDATE departments SET name=? WHERE id =?"
         )->execute([$name , $id]);
     }
+
+
+    public function delete($id){
+        $this->pdo->prepare(
+            "DELETE FROM departments WHERE id = ?"
+        )->execute([$id]);
+    }
+
 }
 
 $database = new database() ;
@@ -194,6 +202,10 @@ while(true){
             echo "deparetement ID : " ; $depID = trim(fgets(STDIN));
             echo "new name : " ; $name = trim(fgets(STDIN));
             $departement->update($depID,$name);
+         }
+         if($chosedepartement=="4"){
+            echo "entrer ID pour suprimer : " ; $ID = trim(fgets(STDIN));
+            $departement->delete($ID);
          }
     }
 }
