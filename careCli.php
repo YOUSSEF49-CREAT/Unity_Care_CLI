@@ -92,10 +92,22 @@ class patient extends basemodel{
     }
 }
 
+class departement extends basemodel{
+      
+
+    public function create($name){
+           $this->pdo->prepare(
+            "INSERT INTO departments(name) VALUES (?)"
+           )->execute([$name]);
+    }
+
+   
+}
+
 $database = new database() ;
 $doctor = new doctor($database->pdo);
 $patient = new patient($database->pdo);
-
+$departement = new departement($database->pdo);
 
 while(true){
     echo "***************menu*****************\n";
@@ -157,5 +169,10 @@ while(true){
          echo "***********departements**********\n";
          echo "1-add departement\n2-show departement\n3-update departement\n4-delet departement\n0-exit\nchose:";
          $chosedepartement = trim(fgets(STDIN));
+         if($chosedepartement=="1"){
+            echo "name : " ; $name =  trim(fgets(STDIN));
+            $departement->create($name);
+         }
+         
     }
 }
